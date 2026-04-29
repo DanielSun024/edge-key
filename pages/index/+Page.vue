@@ -1,15 +1,15 @@
 <template>
   <div class="min-h-screen relative pb-20 font-sans selection:bg-white/30">
-    <!-- 背景层：固定全屏，确保图片完全可见 -->
+    <!-- 背景层：固定全屏 -->
     <div class="fixed inset-0 z-0">
       <img src="https://api.yppp.net/api.php" class="w-full h-full object-cover" />
-      <!-- 移除大部分遮罩，保持背景最原始的清晰度 -->
-      <div class="absolute inset-0 bg-black/5"></div> 
+      <!-- 完全透明效果加上白色底：使用极低透明度的纯白覆盖 -->
+      <div class="absolute inset-0 bg-white/10"></div> 
     </div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-4 pt-8 space-y-8">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 pt-2 space-y-6">
       
-      <!-- 公告部分：完全透明设计 -->
+      <!-- 公告部分：完全透明设计，调整间距 -->
       <section class="rounded-3xl border border-white/20 bg-transparent p-6 shadow-none relative overflow-hidden group">
         <div class="flex items-center gap-3 mb-4">
           <div class="p-2 bg-white/10 rounded-xl">
