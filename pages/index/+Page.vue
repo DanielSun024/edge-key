@@ -8,8 +8,8 @@
     <div class="relative z-10 max-w-6xl mx-auto px-4 pt-6 space-y-6">
       
       <section class="rounded-2xl border border-white/30 bg-white/10 backdrop-blur-xl p-5 md:p-6 shadow-xl relative overflow-hidden">
-        <div class="flex items-center gap-2 mb-3 text-white/90 font-bold text-sm tracking-widest">
-          <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="flex items-center gap-2 mb-3 text-white font-bold text-base md:text-lg tracking-widest">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
           </svg>
           <span>公告</span>
@@ -19,7 +19,7 @@
 
         <div 
           v-if="site.notice" 
-          class="text-orange-500 font-bold text-sm md:text-base leading-relaxed whitespace-pre-wrap drop-shadow-md"
+          class="text-white font-medium text-sm md:text-base leading-relaxed whitespace-pre-wrap drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
         >
           {{ site.notice }}
         </div>
@@ -106,17 +106,11 @@ const filteredProducts = computed(() => {
 </script>
 
 <style scoped>
-/* 隐藏滚动条但保留滚动功能 */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* 调整卡片微动效 */
-.group:hover .btn-primary {
-  transform: translateY(-1px);
 }
 </style>
