@@ -1,100 +1,98 @@
 <template>
-  <div class="min-h-screen relative pb-24 font-sans selection:bg-blue-100">
-    <!-- 背景层：保持极致模糊感 -->
+  <div class="min-h-screen relative pb-20 font-sans">
     <div class="fixed inset-0 z-0">
       <img src="https://api.yppp.net/api.php" class="w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-white/30 backdrop-blur-[12px]"></div> 
+      <div class="absolute inset-0 bg-slate-900/20 backdrop-blur-[8px]"></div> 
     </div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-5 pt-10 space-y-10">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 pt-8 space-y-8">
       
-      <!-- 顶部公告：大圆角 + 柔和阴影 -->
-      <section class="rounded-[32px] border border-white/60 bg-white/40 backdrop-blur-2xl p-7 shadow-xl shadow-blue-900/5">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="p-2 bg-blue-500 rounded-2xl shadow-lg shadow-blue-500/20">
-            <svg xmlns="http://www.w3.org/2000/svg" class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-          </div>
-          <h2 class="text-slate-800 font-heavy text-xl tracking-tighter">站点公告</h2>
+      <section class="rounded-3xl border border-white/20 bg-white/10 backdrop-blur-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+        <div class="flex items-center gap-3 mb-4 text-white/90 font-bold text-lg tracking-widest">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-6 text-orange-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+          </svg>
+          <span>官方公告</span>
         </div>
+
+        <div class="border-t border-white/10 mb-5"></div>
+
         <div 
           v-if="site.notice" 
-          class="text-slate-600 font-medium text-sm md:text-base leading-relaxed whitespace-pre-wrap pl-1"
+          class="text-orange-100/90 font-semibold text-sm md:text-base leading-relaxed whitespace-pre-wrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
         >
           {{ site.notice }}
         </div>
       </section>
 
-      <!-- 分类标签：药片式设计 -->
-      <nav class="flex gap-3 overflow-x-auto no-scrollbar py-2">
-        <button
-          v-for="cat in [null, ...catalog.categories]"
-          :key="cat ? cat.id : 'all'"
-          @click="activeCategoryId = cat ? cat.id : null"
-          class="px-7 py-3 rounded-[20px] text-sm font-bold transition-all duration-300 whitespace-nowrap border"
-          :class="activeCategoryId === (cat ? cat.id : null) 
-            ? 'bg-blue-600 text-white border-blue-600 shadow-xl shadow-blue-600/20 scale-105' 
-            : 'bg-white/60 text-slate-500 border-white/80 hover:bg-white/90'"
-        >
-          {{ cat ? cat.name : '全部商品' }}
-        </button>
-      </nav>
+      <section class="rounded-2xl border border-white/20 bg-white/5 backdrop-blur-xl p-2 flex items-center gap-4">
+        <div class="flex items-center gap-2 px-4 py-2 border-r border-white/10 text-white/60 text-xs font-bold shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+          选择分类
+        </div>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar py-1">
+          <button
+            v-for="cat in [null, ...catalog.categories]"
+            :key="cat ? cat.id : 'all'"
+            @click="activeCategoryId = cat ? cat.id : null"
+            class="px-5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap"
+            :class="activeCategoryId === (cat ? cat.id : null) 
+              ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30 scale-105' 
+              : 'bg-white/5 text-white/70 hover:bg-white/10'"
+          >
+            {{ cat ? cat.name : '全部商品' }}
+          </button>
+        </div>
+      </section>
 
-      <!-- 商品列表：参照图 11 的极简白色卡片 -->
-      <div v-if="filteredProducts.length" class="grid gap-6 grid-cols-1 sm:grid-cols-2">
+      <div v-if="filteredProducts.length" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <article 
           v-for="product in filteredProducts" 
           :key="product.id" 
-          class="group relative bg-white/80 backdrop-blur-md rounded-[32px] border border-white/60 p-6 flex items-center gap-6 transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1.5 overflow-hidden"
+          class="group relative bg-white/70 backdrop-blur-xl rounded-3xl border border-white/50 p-5 flex items-center gap-5 hover:bg-white/90 transition-all duration-500 shadow-xl hover:-translate-y-1"
         >
-          <!-- 侧边装饰条：图 11 的视觉灵魂 -->
-          <div class="absolute left-0 top-1/4 bottom-1/4 w-1.5 bg-blue-500 rounded-r-full transform -translate-x-1 group-hover:translate-x-0 transition-transform"></div>
-
-          <!-- 商品封面：圆角正方形 -->
-          <div class="size-24 shrink-0 bg-slate-50 rounded-[24px] p-4 flex items-center justify-center shadow-inner group-hover:bg-blue-50/50 transition-colors">
+          <div class="size-20 shrink-0 bg-slate-100 rounded-2xl p-3 flex items-center justify-center overflow-hidden shadow-inner">
             <img 
               :src="product.coverImage || emptyCoverUrl" 
-              class="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500"
+              class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110"
             />
           </div>
 
-          <!-- 内容区 -->
-          <div class="flex-grow min-w-0 flex flex-col justify-between h-24 py-1">
-            <div>
-              <h3 class="text-slate-800 font-black text-lg truncate mb-1">{{ product.name }}</h3>
-              <p class="text-slate-400 text-xs font-medium truncate">{{ product.subtitle || '点击查看详情' }}</p>
-            </div>
+          <div class="flex-grow min-w-0 space-y-2">
+            <h3 class="text-slate-800 font-extrabold text-base truncate group-hover:text-blue-600 transition-colors">
+              {{ product.name }}
+            </h3>
             
-            <div class="flex items-center justify-between">
+            <div class="flex items-end justify-between">
               <div class="flex flex-col">
-                <div class="flex items-baseline gap-0.5">
-                  <span class="text-blue-600 text-sm font-black">¥</span>
-                  <span class="text-blue-600 text-2xl font-black">{{ product.price }}</span>
-                </div>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="size-1.5 rounded-full" :class="product.stock > 0 ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'"></span>
-                  <span class="text-[11px] text-slate-400 font-bold uppercase tracking-widest">
-                    STOCK: {{ product.stock || '∞' }}
-                  </span>
-                </div>
+                <span class="text-rose-500 font-black text-xl">
+                  <span class="text-xs mr-0.5">¥</span>{{ product.price }}
+                </span>
+                <span class="text-[10px] text-slate-400 font-bold tracking-tight">
+                  库存: <span :class="product.stock > 0 ? 'text-emerald-500' : 'text-rose-400'">{{ product.stock || '充足' }}</span>
+                </span>
               </div>
               
-              <a :href="`/product/${product.slug}`" class="flex items-center justify-center size-12 bg-slate-900 rounded-2xl text-white hover:bg-blue-600 transition-all duration-300 shadow-lg active:scale-90 group/btn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
+              <a :href="`/product/${product.slug}`" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-md active:scale-95">
+                详情
               </a>
             </div>
+          </div>
+
+          <div class="absolute bottom-0 left-6 right-6 h-1 bg-slate-100 rounded-full overflow-hidden opacity-50">
+            <div 
+              class="h-full transition-all duration-1000" 
+              :class="product.stock > 10 ? 'bg-emerald-400 w-full' : 'bg-rose-400 w-1/3'"
+            ></div>
           </div>
         </article>
       </div>
 
-      <!-- 空状态 -->
-      <div v-else class="py-40 text-center bg-white/40 backdrop-blur-xl rounded-[48px] border-2 border-dashed border-white/60">
-        <div class="text-6xl mb-6 grayscale opacity-50">🛒</div>
-        <p class="text-slate-400 font-black text-lg tracking-widest">此分类下暂无商品</p>
+      <div v-else class="py-32 text-center bg-white/5 backdrop-blur-md rounded-[40px] border border-dashed border-white/20 text-white/30">
+        <div class="text-5xl mb-4">📦</div>
+        <p class="font-bold tracking-widest">暂无在售商品</p>
       </div>
     </div>
   </div>
@@ -103,6 +101,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useData } from "vike-vue/useData";
+// 移除了 formatCents，因为数据库已改为“元”单位
 import emptyCoverUrl from "../../assets/empty.jpg";
 import type { Data } from "./+data";
 
@@ -124,13 +123,9 @@ const filteredProducts = computed(() => {
   scrollbar-width: none;
 }
 
-/* 文字渲染优化 */
-h2, h3, span, p {
-  letter-spacing: -0.02em;
-}
-
-/* 极简字体加粗 */
-.font-heavy {
-  font-weight: 900;
+/* 增强字体渲染 */
+:deep(*) {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>
