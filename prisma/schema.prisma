@@ -48,8 +48,6 @@ enum ContactType {
   OTHER
 }
 
-
-
 enum EmailChannel {
   API
   SMTP
@@ -123,17 +121,17 @@ model Admin {
 
 model SiteSetting {
   id             Int      @id @default(1)
-  siteName       String
-  siteUrl        String?
-  siteSubtitle   String?
-  logoIcon       String?
-  logo           String?
-  notice         String?
+  siteName        String
+  siteUrl         String?
+  siteSubtitle    String?
+  logoIcon        String?
+  logo            String?
+  notice          String?
   supportContact String?
-  footerText     String?
-  orderNotice    String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  footerText      String?
+  orderNotice     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Category {
@@ -156,12 +154,10 @@ model Product {
   subtitle          String?
   description       String?
   coverImage        String?
-  price             Int
+  price             Int                 // 价格（元），逻辑层处理对应数值
   status            ProductStatus       @default(DRAFT)
   deliveryType      ProductDeliveryType @default(CARD_AUTO)
   stockMode         ProductStockMode    @default(FINITE)
-  minBuy            Int                 @default(1)
-  maxBuy            Int                 @default(1)
   sort              Int                 @default(0)
   isVisibleStock    Boolean             @default(true)
   isContactRequired Boolean             @default(true)
@@ -241,13 +237,13 @@ model OrderDelivery {
 }
 
 model PaymentConfig {
-  id         Int             @id @default(autoincrement())
-  provider   String @unique
+  id         Int      @id @default(autoincrement())
+  provider   String   @unique
   name       String
-  isEnabled  Boolean         @default(false)
+  isEnabled  Boolean  @default(false)
   configJson String
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model PaymentLog {
@@ -281,30 +277,30 @@ model EmailConfig {
 }
 
 model EmailTemplate {
-  id          Int        @id @default(autoincrement())
-  scene       EmailScene @unique
-  name        String
-  subject     String
-  content     String
-  isEnabled   Boolean    @default(true)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id         Int        @id @default(autoincrement())
+  scene      EmailScene @unique
+  name       String
+  subject    String
+  content    String
+  isEnabled  Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
 
 model EmailLog {
-  id          Int             @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   orderId     Int?
   provider    EmailChannel
   apiProvider EmailApiProvider?
   scene       EmailScene
-  status      EmailSendStatus @default(SUCCESS)
+  status      EmailSendStatus  @default(SUCCESS)
   toEmail     String
   subject     String
   messageId   String?
   error       String?
   triggeredBy String?
-  createdAt   DateTime        @default(now())
-  order       Order?          @relation(fields: [orderId], references: [id])
+  createdAt   DateTime         @default(now())
+  order       Order?           @relation(fields: [orderId], references: [id])
 
   @@index([provider, createdAt])
   @@index([scene, createdAt])
