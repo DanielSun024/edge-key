@@ -1,62 +1,45 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 py-8 space-y-12 bg-base-50">
-    
-<header class="relative rounded-2xl bg-white border border-base-200 p-8 md:p-12 overflow-hidden shadow-sm">
-      <div class="relative z-10 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8">
-        
-        <div class="flex-grow max-w-3xl space-y-6">
-          <div class="space-y-2">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-base-content tracking-tight">
-              {{ site.siteSubtitle || '公告' }}
-            </h1>
-            <div class="h-1.5 w-20 bg-primary rounded-full"></div>
-          </div>
+  <div class="min-h-screen relative pb-20">
+    <div class="fixed inset-0 z-0">
+      <img src="https://api.yppp.net/api.php" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-black/10"></div> </div>
 
+    <div class="relative z-10 max-w-7xl mx-auto px-4 pt-6 space-y-8">
+      
+      <section class="rounded-3xl border border-white/30 bg-white/40 backdrop-blur-xl p-6 md:p-8 shadow-2xl">
+        <div class="flex items-center gap-2 mb-4 text-base-content font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+          </svg>
+          <span>公告</span>
+        </div>
+
+        <div class="border-t border-dashed border-white/40 my-4"></div>
+
+        <div class="space-y-4">
           <div 
             v-if="site.notice" 
-            class="text-base-content/70 text-base md:text-lg leading-relaxed whitespace-pre-wrap"
+            class="text-orange-600 font-medium text-base md:text-lg leading-relaxed whitespace-pre-wrap drop-shadow-sm"
           >
             {{ site.notice }}
           </div>
         </div>
+      </section>
 
-        <div class="shrink-0">
-          <a 
-            href="https://t.me/your_link" 
-            target="_blank" 
-            class="btn btn-primary btn-md md:btn-lg rounded-2xl gap-3 no-animation shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-            </svg>
-            <span class="font-bold">联系在线客服</span>
-          </a>
-        </div>
-      </div>
-      
-      <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-    </header>
-
-    <section class="space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h2 class="text-2xl font-bold text-base-content">精选商品</h2>
+      <div class="flex items-center justify-between px-2">
+        <h2 class="text-2xl font-black text-white drop-shadow-md tracking-wider">精选商品</h2>
         
-        <div v-if="catalog.categories.length" class="flex flex-wrap gap-2">
+        <div v-if="catalog.categories.length" class="flex gap-2">
           <button
-            class="btn btn-sm rounded-full no-animation"
-            :class="activeCategoryId === null ? 'btn-primary' : 'btn-ghost bg-white border-base-200'"
-            @click="activeCategoryId = null"
+            v-for="cat in [null, ...catalog.categories]"
+            :key="cat ? cat.id : 'all'"
+            @click="activeCategoryId = cat ? cat.id : null"
+            class="px-4 py-1.5 rounded-full text-sm font-bold transition-all backdrop-blur-md border"
+            :class="activeCategoryId === (cat ? cat.id : null) 
+              ? 'bg-white text-primary border-white' 
+              : 'bg-black/20 text-white border-white/20 hover:bg-black/40'"
           >
-            全部
-          </button>
-          <button
-            v-for="category in catalog.categories"
-            :key="category.id"
-            class="btn btn-sm rounded-full no-animation"
-            :class="activeCategoryId === category.id ? 'btn-primary' : 'btn-ghost bg-white border-base-200'"
-            @click="activeCategoryId = category.id"
-          >
-            {{ category.name }}
+            {{ cat ? cat.name : '全部' }}
           </button>
         </div>
       </div>
@@ -65,44 +48,32 @@
         <article 
           v-for="product in filteredProducts" 
           :key="product.id" 
-          class="group flex flex-col bg-white rounded-xl border border-base-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/30"
+          class="group relative bg-white/80 backdrop-blur-md rounded-3xl border border-white/50 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
         >
-          <a :href="`/product/${product.slug}`" class="block aspect-[4/3] overflow-hidden bg-base-100">
+          <a :href="`/product/${product.slug}`" class="block aspect-square p-4">
             <img 
               :src="product.coverImage || emptyCoverUrl" 
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              :alt="product.name"
+              class="h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110"
             />
           </a>
 
-          <div class="flex flex-col p-5 flex-grow">
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] px-2 py-0.5 rounded bg-base-100 text-base-content/50 font-bold uppercase tracking-wider">
-                {{ product.categoryName || '未分类' }}
-              </span>
-            </div>
-            
-            <h3 class="text-lg font-bold text-base-content mb-4 line-clamp-1 group-hover:text-primary transition-colors">
-              {{ product.name }}
-            </h3>
+          <div class="p-6 pt-0 flex flex-col items-center text-center">
+            <span class="text-[10px] text-base-content/40 font-bold uppercase mb-1">{{ product.categoryName }}</span>
+            <h3 class="text-lg font-black text-base-content mb-4 line-clamp-1 italic">{{ product.name }}</h3>
 
-            <div class="mt-auto flex items-center justify-between pt-4 border-t border-base-100">
-              <div class="flex items-baseline text-error font-black">
-                <span class="text-xs mr-0.5">¥</span>
+            <div class="w-full flex items-center justify-between bg-base-100/50 p-3 rounded-2xl border border-white">
+              <div class="flex items-baseline text-red-500 font-black italic">
+                <span class="text-xs mr-0.5 font-bold">¥</span>
                 <span class="text-2xl tracking-tighter">{{ formatCents(product.price) }}</span>
               </div>
-              <a :href="`/product/${product.slug}`" class="btn btn-primary btn-sm rounded-lg px-6 no-animation">
+              <a :href="`/product/${product.slug}`" class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm">
                 详情
               </a>
             </div>
           </div>
         </article>
       </div>
-
-      <div v-else class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-base-300 text-base-content/40">
-        <p class="text-lg font-medium">暂无在售商品</p>
-      </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -117,18 +88,23 @@ const { site, catalog } = useData<Data>();
 const activeCategoryId = ref<number | null>(null);
 
 const filteredProducts = computed(() => {
-  if (activeCategoryId.value === null) {
-    return catalog.products;
-  }
-  return catalog.products.filter((product) => product.categoryId === activeCategoryId.value);
+  if (activeCategoryId.value === null) return catalog.products;
+  return catalog.products.filter((p) => p.categoryId === activeCategoryId.value);
 });
 </script>
 
 <style scoped>
+/* 强制单行省略 */
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
+}
+
+/* 增强磨砂感 */
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 </style>
