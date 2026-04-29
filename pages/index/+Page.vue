@@ -9,8 +9,8 @@
 
     <div class="relative z-10 max-w-6xl mx-auto px-4 pt-2 space-y-6">
       
-      <!-- 公告部分：修改为与顶部栏一致的背景效果 -->
-      <section class="rounded-3xl border border-white/20 bg-white/10 p-6 shadow-none relative overflow-hidden group">
+      <!-- 公告部分：修改为与顶部栏一致的背景效果，增加轻微磨砂 -->
+      <section class="rounded-3xl border border-white/20 bg-white/10 backdrop-blur-[2px] p-6 shadow-none relative overflow-hidden group">
         <div class="flex items-center gap-3 mb-4">
           <div class="p-2 bg-white/10 rounded-xl">
             <svg xmlns="http://www.w3.org/2000/svg" class="size-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,8 +30,8 @@
         </div>
       </section>
 
-      <!-- 分类切换：修改为与顶部栏一致的背景效果 -->
-      <section class="rounded-2xl border border-white/10 bg-white/10 p-2 flex items-center gap-2 overflow-hidden">
+      <!-- 分类切换：修改为与顶部栏一致的背景效果，增加轻微磨砂 -->
+      <section class="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-[2px] p-2 flex items-center gap-2 overflow-hidden">
         <div class="flex items-center gap-2 px-4 py-1 border-r border-white/10 text-white font-bold shrink-0 drop-shadow-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -53,12 +53,12 @@
         </div>
       </section>
 
-      <!-- 商品列表：修改为与顶部栏一致的背景效果 -->
+      <!-- 商品列表：修改为与顶部栏一致的背景效果，增加轻微磨砂 -->
       <div v-if="filteredProducts.length" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <article 
           v-for="product in filteredProducts" 
           :key="product.id" 
-          class="group relative bg-white/10 rounded-3xl border border-white/20 p-5 flex items-center gap-5 hover:border-white/50 hover:-translate-y-1 transition-all duration-500 hover:bg-white/20"
+          class="group relative bg-white/10 backdrop-blur-[2px] rounded-3xl border border-white/20 p-5 flex items-center gap-5 hover:border-white/50 hover:-translate-y-1 transition-all duration-500 hover:bg-white/20"
         >
           <!-- 图片容器 -->
           <div class="size-20 shrink-0 bg-white/10 rounded-2xl p-2 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-white/30 transition-colors">
@@ -100,7 +100,7 @@
       </div>
 
       <!-- 空状态 -->
-      <div v-else class="py-32 text-center bg-white/10 rounded-[3rem] border border-dashed border-white/20 text-white/50 flex flex-col items-center gap-4">
+      <div v-else class="py-32 text-center bg-white/10 backdrop-blur-[2px] rounded-[3rem] border border-dashed border-white/20 text-white/50 flex flex-col items-center gap-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="size-12 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
         </svg>
