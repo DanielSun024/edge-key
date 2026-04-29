@@ -25,7 +25,8 @@
             <div class="text-sm text-base-content/60">当前价格</div>
             <div class="text-3xl font-bold text-primary">{{ formatCents(product.price) }}</div>
           </div>
-          
+          <div class="text-sm text-base-content/70">限购 {{ product.minBuy }} - {{ product.maxBuy }} 件</div>
+
           <div class="divider my-0"></div>
 
           <label class="flex flex-col gap-1.5">
@@ -36,7 +37,7 @@
 
           <label class="flex flex-col gap-1.5">
             <span class="label-text font-medium">购买数量</span>
-            <input v-model.number="form.quantity" type="number" class="input input-bordered w-full" />
+            <input v-model.number="form.quantity" type="number" :min="product.minBuy" :max="product.maxBuy" class="input input-bordered w-full" />
           </label>
 
           <label class="flex flex-col gap-1.5">
@@ -67,6 +68,8 @@
               </label>
             </div>
           </div>
+
+
 
           <AppButton variant="primary" :loading="submitting" :disabled="!paymentMethods.length" @click="handleCreateOrder">提交订单</AppButton>
           <p v-if="!paymentMethods.length" class="text-sm text-warning">当前没有可用支付方式，请联系管理员启用支付配置。</p>
@@ -100,6 +103,8 @@ const epayChannels = [
   { value: "alipay", label: "支付宝" },
   { value: "wxpay", label: "微信支付" },
 ] as const;
+
+
 
 const form = reactive({
   quantity: product?.minBuy ?? 1,
