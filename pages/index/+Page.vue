@@ -1,27 +1,40 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 py-8 space-y-12 bg-base-50">
     
-    <header class="relative rounded-2xl bg-white border border-base-200 p-8 md:p-12 overflow-hidden shadow-sm">
-      <div class="relative z-10 max-w-2xl">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-base-content tracking-tight">
-          {{ site.siteSubtitle || '官方精品商城' }}
-        </h1>
-        <p v-if="site.notice" class="mt-4 text-base-content/60 text-lg leading-relaxed">
-          {{ site.notice }}
-        </p>
-        <div class="mt-8 flex gap-4">
-          <div class="flex flex-col">
-            <span class="text-sm text-base-content/40 uppercase font-bold tracking-wider">在售商品</span>
-            <span class="text-2xl font-mono font-bold text-primary">{{ catalog.products.length }} 款</span>
+<header class="relative rounded-2xl bg-white border border-base-200 p-8 md:p-12 overflow-hidden shadow-sm">
+      <div class="relative z-10 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8">
+        
+        <div class="flex-grow max-w-3xl space-y-6">
+          <div class="space-y-2">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-base-content tracking-tight">
+              {{ site.siteSubtitle || '公告' }}
+            </h1>
+            <div class="h-1.5 w-20 bg-primary rounded-full"></div>
           </div>
-          <div class="divider divider-horizontal"></div>
-          <div class="flex flex-col">
-            <span class="text-sm text-base-content/40 uppercase font-bold tracking-wider">服务保证</span>
-            <span class="text-2xl font-mono font-bold text-success">自动发货</span>
+
+          <div 
+            v-if="site.notice" 
+            class="text-base-content/70 text-base md:text-lg leading-relaxed whitespace-pre-wrap"
+          >
+            {{ site.notice }}
           </div>
         </div>
+
+        <div class="shrink-0">
+          <a 
+            href="https://t.me/your_link" 
+            target="_blank" 
+            class="btn btn-primary btn-md md:btn-lg rounded-2xl gap-3 no-animation shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+            </svg>
+            <span class="font-bold">联系在线客服</span>
+          </a>
+        </div>
       </div>
-      <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
     </header>
 
     <section class="space-y-6">
@@ -57,17 +70,16 @@
           <a :href="`/product/${product.slug}`" class="block aspect-[4/3] overflow-hidden bg-base-100">
             <img 
               :src="product.coverImage || emptyCoverUrl" 
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               :alt="product.name"
             />
           </a>
 
           <div class="flex flex-col p-5 flex-grow">
             <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] px-2 py-0.5 rounded bg-base-100 text-base-content/50 font-bold uppercase">
+              <span class="text-[10px] px-2 py-0.5 rounded bg-base-100 text-base-content/50 font-bold uppercase tracking-wider">
                 {{ product.categoryName || '未分类' }}
               </span>
-              <div class="badge badge-outline badge-xs opacity-50 font-mono italic">#{{ product.slug }}</div>
             </div>
             
             <h3 class="text-lg font-bold text-base-content mb-4 line-clamp-1 group-hover:text-primary transition-colors">
@@ -88,11 +100,7 @@
       </div>
 
       <div v-else class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-base-300 text-base-content/40">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-16 h-16 mb-4 opacity-20">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-        </svg>
         <p class="text-lg font-medium">暂无在售商品</p>
-        <p class="text-sm">请联系管理员上架商品</p>
       </div>
     </section>
   </div>
@@ -117,7 +125,6 @@ const filteredProducts = computed(() => {
 </script>
 
 <style scoped>
-/* 移除之前复杂的 hero-img 和 border 样式 */
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
